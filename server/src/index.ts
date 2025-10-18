@@ -1,55 +1,31 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import swaggerJsDoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
-import serverless from 'serverless-http';
+import express from 'express'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
+import dotenv from 'dotenv'
+import authRoutes from './routes/auth.routes'
 
-// Load environment variables
-dotenv.config();
+dotenv.config()
 
-// Create Express app
-const app = express();
-const port = process.env.PORT || 4000;
+const app = express()
+const PORT = process.env.PORT || 4000
 
 // Middleware
-app.use(cors());
-app.use(express.json());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    credentials: true,
+  })
+)
+app.use(express.json())
+app.use(cookieParser())
 
-// Swagger configuration
-const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Drozdy API',
-      version: '1.0.0',
-      description: 'Drozdy API',
-    },
-    servers: [
-      {
-        url: 'http://localhost:4000/api',
-        description: 'Development server',
-      },
-    ],
-  },
-  apis: ['./src/routes/*.ts'],
-};
+// Routes
+app.use('/api/auth', authRoutes)
 
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.get('/', (req, res) => {
+  res.json({ message: 'Drozdy API' })
+})
 
-// API routes
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Server is running' });
-});
-
-// Start server (in development)
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-    console.log(`Swagger docs available at http://localhost:${port}/api-docs`);
-  });
-}
-
-// Export for serverless (in production)
-export const handler = serverless(app);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
