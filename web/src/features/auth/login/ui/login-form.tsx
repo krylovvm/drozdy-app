@@ -41,6 +41,7 @@ export function LoginForm() {
         autoFocus
         value={email}
         onChange={e => setEmail(e.target.value)}
+        slotProps={{ inputLabel: { shrink: true } }}
       />
 
       <TextField
@@ -52,6 +53,7 @@ export function LoginForm() {
         autoComplete="current-password"
         value={password}
         onChange={e => setPassword(e.target.value)}
+        slotProps={{ inputLabel: { shrink: true } }}
       />
 
       <Button

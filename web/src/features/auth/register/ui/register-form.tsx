@@ -1,9 +1,8 @@
 'use client'
 
-import { Alert,Box, Button, TextField } from '@mui/material'
-import { AxiosError } from 'axios'
 import { useState } from 'react'
-
+import { Box, TextField, Button, Alert } from '@mui/material'
+import { AxiosError } from 'axios'
 import { useRegister } from '../model'
 
 export function RegisterForm() {
@@ -21,7 +20,6 @@ export function RegisterForm() {
     if (error instanceof AxiosError) {
       return error.response?.data?.message || 'Registration failed'
     }
-
     return 'Registration failed'
   }
 
@@ -42,6 +40,7 @@ export function RegisterForm() {
         autoFocus
         value={name}
         onChange={e => setName(e.target.value)}
+        slotProps={{ inputLabel: { shrink: true } }}
       />
 
       <TextField
@@ -53,6 +52,7 @@ export function RegisterForm() {
         autoComplete="email"
         value={email}
         onChange={e => setEmail(e.target.value)}
+        slotProps={{ inputLabel: { shrink: true } }}
       />
 
       <TextField
@@ -64,6 +64,7 @@ export function RegisterForm() {
         autoComplete="new-password"
         value={password}
         onChange={e => setPassword(e.target.value)}
+        slotProps={{ inputLabel: { shrink: true } }}
       />
 
       <Button

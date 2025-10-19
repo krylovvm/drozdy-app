@@ -8,6 +8,5 @@ export const useUser = () => {
   return useQuery({
     queryKey: [USER_QUERY_KEY],
     queryFn: userApi.getMe,
-    retry: false,
   })
 }
