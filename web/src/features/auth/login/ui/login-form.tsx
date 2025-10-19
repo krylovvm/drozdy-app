@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
-import { Box, TextField, Button, Alert } from '@mui/material'
-import { useLogin } from '../model/use-login'
+import { Alert, Box, Button, TextField } from '@mui/material'
 import { AxiosError } from 'axios'
+import { useState } from 'react'
+
+import { useLogin } from '../model'
 
 export function LoginForm() {
   const [email, setEmail] = useState('')

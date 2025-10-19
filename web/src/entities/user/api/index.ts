@@ -1,4 +1,5 @@
 import { apiClient } from '@/shared/api/client'
+
 import { AuthResponse, LoginRequest, RegisterRequest, User } from '../model/types'
 
 export const userApi = {

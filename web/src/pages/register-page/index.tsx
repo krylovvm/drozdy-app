@@ -1,8 +1,9 @@
 'use client'
 
+import { Box, Container, Paper,Typography } from '@mui/material'
 import Link from 'next/link'
-import { Container, Box, Typography, Paper } from '@mui/material'
-import { RegisterForm } from '@/features/auth/register/ui/register-form'
+
+import { RegisterForm } from '@/features/auth/'
 
 export function RegisterPage() {
   return (

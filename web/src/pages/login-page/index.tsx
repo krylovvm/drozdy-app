@@ -1,8 +1,9 @@
 'use client'
 
+import { Box, Container, Paper, Typography } from '@mui/material'
 import Link from 'next/link'
-import { Container, Box, Typography, Paper } from '@mui/material'
-import { LoginForm } from '@/features/auth/login/ui/login-form'
+
+import { LoginForm } from '@/features/auth/'
 
 export function LoginPage() {
   return (
@@ -25,7 +26,7 @@ export function LoginPage() {
           <Box sx={{ mt: 2, textAlign: 'center' }}>
             <Link href="/register" style={{ textDecoration: 'none' }}>
               <Typography variant="body2" color="primary">
-                Don't have an account? Sign Up
+                Don&apos;t have an account? Sign Up
               </Typography>
             </Link>
           </Box>

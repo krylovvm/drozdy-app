@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
-import { Box, TextField, Button, Alert } from '@mui/material'
+import { Alert,Box, Button, TextField } from '@mui/material'
 import { AxiosError } from 'axios'
-import { useRegister } from '../model/use-register'
+import { useState } from 'react'
+
+import { useRegister } from '../model'
 
 export function RegisterForm() {
   const [name, setName] = useState('')
@@ -20,6 +21,7 @@ export function RegisterForm() {
     if (error instanceof AxiosError) {
       return error.response?.data?.message || 'Registration failed'
     }
+
     return 'Registration failed'
   }
 

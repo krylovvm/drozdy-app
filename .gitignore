@@ -40,3 +40,10 @@ lerna-debug.log*
 .env.production.local
 
 .next
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
