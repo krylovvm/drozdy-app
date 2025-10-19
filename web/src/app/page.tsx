@@ -1,8 +1,8 @@
-import { Box, Container,Typography } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
 
 export default function Home() {
   return (
-    <Container maxWidth="sm">
+    <Container>
       <Box sx={{ my: 4, textAlign: 'center' }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Drozdy

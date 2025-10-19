@@ -3,6 +3,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 import authRoutes from './routes/auth.routes'
+import postsRoutes from './routes/posts.routes'
 
 dotenv.config()
 
@@ -21,6 +22,7 @@ app.use(cookieParser())
 
 // Routes
 app.use('/api/auth', authRoutes)
+app.use('/api', postsRoutes)
 
 app.get('/', (req, res) => {
   res.json({ message: 'Drozdy API' })
