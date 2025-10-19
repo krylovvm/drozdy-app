@@ -1,19 +1,20 @@
 'use client'
 
-import { useState } from 'react'
-import { Box, TextField, Button, Alert } from '@mui/material'
+import { Alert, Box, Button, TextField } from '@mui/material'
 import { AxiosError } from 'axios'
+import { useState } from 'react'
+
 import { useRegister } from '../model'
 
 export function RegisterForm() {
-  const [name, setName] = useState('')
+  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { mutate: register, isPending, error } = useRegister()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    register({ name, email, password })
+    register({ username, email, password })
   }
 
   const getErrorMessage = () => {
@@ -38,8 +39,8 @@ export function RegisterForm() {
         label="Name"
         autoComplete="name"
         autoFocus
-        value={name}
-        onChange={e => setName(e.target.value)}
+        value={username}
+        onChange={e => setUsername(e.target.value)}
         slotProps={{ inputLabel: { shrink: true } }}
       />
 

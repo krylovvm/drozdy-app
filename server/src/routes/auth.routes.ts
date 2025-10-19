@@ -1,23 +1,25 @@
 import { Router, Request, Response } from 'express'
 import bcrypt from 'bcrypt'
-import { v4 as uuidv4 } from 'uuid'
-import { users, User, UserDTO } from '../models/user.model'
+import { UserDTO } from '../models/user.model'
 import { generateToken, verifyToken } from '../utils/jwt.util'
+import { prisma } from '../prisma'
 
 const router = Router()
 
 // Register
 router.post('/register', async (req: Request, res: Response) => {
   try {
-    const { email, password, name } = req.body
+    const { email, password, username } = req.body
 
     // Validation
-    if (!email || !password || !name) {
+    if (!email || !password || !username) {
       return res.status(400).json({ message: 'All fields are required' })
     }
 
     // Check if user already exists
-    const existingUser = users.find(u => u.email === email)
+    const existingUser = await prisma.user.findFirst({
+      where: { OR: [{ username }, { email }] },
+    })
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' })
     }
@@ -26,15 +28,13 @@ router.post('/register', async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(password, 10)
 
     // Create user
-    const user: User = {
-      id: uuidv4(),
-      email,
-      password: hashedPassword,
-      name,
-      createdAt: new Date(),
-    }
-
-    users.push(user)
+    const user = await prisma.user.create({
+      data: {
+        username,
+        email,
+        passwordHash: hashedPassword,
+      },
+    })
 
     // Generate token
     const token = generateToken(user.id)
@@ -50,7 +50,7 @@ router.post('/register', async (req: Request, res: Response) => {
     const userDTO: UserDTO = {
       id: user.id,
       email: user.email,
-      name: user.name,
+      username: user.username,
     }
 
     res.status(201).json({ user: userDTO, token })
@@ -71,13 +71,13 @@ router.post('/login', async (req: Request, res: Response) => {
     }
 
     // Find user
-    const user = users.find(u => u.email === email)
+    const user = await prisma.user.findUnique({ where: { email } })
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' })
     }
 
     // Verify password
-    const isPasswordValid = await bcrypt.compare(password, user.password)
+    const isPasswordValid = await bcrypt.compare(password, user.passwordHash)
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid credentials' })
     }
@@ -96,7 +96,7 @@ router.post('/login', async (req: Request, res: Response) => {
     const userDTO: UserDTO = {
       id: user.id,
       email: user.email,
-      name: user.name,
+      username: user.username,
     }
 
     res.json({ user: userDTO, token })
@@ -116,7 +116,9 @@ router.get('/me', async (req: Request, res: Response) => {
     }
 
     const { userId } = verifyToken(token)
-    const user = users.find(u => u.id === userId)
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    })
 
     if (!user) {
       return res.status(401).json({ message: 'User not found' })
@@ -125,7 +127,7 @@ router.get('/me', async (req: Request, res: Response) => {
     const userDTO: UserDTO = {
       id: user.id,
       email: user.email,
-      name: user.name,
+      username: user.username,
     }
 
     res.json({ user: userDTO })

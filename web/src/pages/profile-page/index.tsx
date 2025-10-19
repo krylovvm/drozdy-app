@@ -14,9 +14,9 @@ export function ProfilePage() {
 
   return (
     <Container>
-      <Typography variant="h2">{data?.user.name}</Typography>
-      <PostCreateForm username={data?.user.name || ''} />
-      <ProfileFeed username={data?.user.name || ''} />
+      <Typography variant="h2">{data?.user.username}</Typography>
+      <PostCreateForm username={data?.user.username || ''} />
+      <ProfileFeed username={data?.user.username || ''} />
     </Container>
   )
 }

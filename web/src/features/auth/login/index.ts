@@ -1,2 +1,2 @@
 export * from './model/index'
-export { LoginForm } from './ui/login-form'
+export { LoginForm } from './ui/LoginForm'

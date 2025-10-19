@@ -1,7 +1,7 @@
 export interface User {
   id: string
   email: string
-  name: string
+  username: string
 }
 
 export interface AuthResponse {
@@ -17,5 +17,5 @@ export interface LoginRequest {
 export interface RegisterRequest {
   email: string
   password: string
-  name: string
+  username: string
 }
