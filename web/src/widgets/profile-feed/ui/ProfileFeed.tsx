@@ -4,12 +4,12 @@ import { Box, Button, Card, CardContent, CircularProgress, Stack, Typography } f
 
 import { useUserPosts } from '@/entities/post/'
 
-export function ProfileFeed({ username }: { username: string }) {
+export const ProfileFeed = ({ username }: { username: string }) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useUserPosts(username)
 
   if (isLoading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+      <Box sx={{ display: 'grid', placeItems: 'center', height: '200px' }}>
         <CircularProgress />
       </Box>
     )

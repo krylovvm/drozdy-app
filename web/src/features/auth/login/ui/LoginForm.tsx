@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 import { useLogin } from '../model'
 
-export function LoginForm() {
+export const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { mutate: login, isPending, error } = useLogin()
@@ -20,6 +20,7 @@ export function LoginForm() {
     if (error instanceof AxiosError) {
       return error.response?.data?.message || 'Login failed'
     }
+
     return 'Login failed'
   }
 

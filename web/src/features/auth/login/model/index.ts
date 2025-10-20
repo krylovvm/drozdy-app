@@ -1,19 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
-import { LoginRequest, USER_QUERY_KEY } from '@/entities/user/'
-import { userApi } from '@/entities/user/api'
+import { LoginRequest, USER_QUERY_KEY, userApi } from '@/entities/user/'
+import { PATHS } from '@/shared/config/paths'
 
 export const useLogin = () => {
-  const router = useRouter()
+  const { push } = useRouter()
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: (data: LoginRequest) => userApi.login(data),
     onSuccess: data => {
-      localStorage.setItem('token', data.token)
       queryClient.setQueryData([USER_QUERY_KEY], { user: data.user })
-      router.push('/')
+      push(PATHS.PROFILE)
     },
   })
 }

@@ -1,13 +1,5 @@
-import { Box, Container, Typography } from '@mui/material'
+import { HomePage } from '@/pages/home'
 
-export default function Home() {
-  return (
-    <Container>
-      <Box sx={{ my: 4, textAlign: 'center' }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Drozdy
-        </Typography>
-      </Box>
-    </Container>
-  )
+export default function Page() {
+  return <HomePage />
 }

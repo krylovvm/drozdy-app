@@ -4,6 +4,7 @@ import { Box, Container, Paper, Typography } from '@mui/material'
 import Link from 'next/link'
 
 import { LoginForm } from '@/features/auth/'
+import { PATHS } from '@/shared/config/paths'
 
 export function LoginPage() {
   return (
@@ -24,7 +25,7 @@ export function LoginPage() {
           <LoginForm />
 
           <Box sx={{ mt: 2, textAlign: 'center' }}>
-            <Link href="/register" style={{ textDecoration: 'none' }}>
+            <Link href={PATHS.REGISTER} style={{ textDecoration: 'none' }}>
               <Typography variant="body2" color="primary">
                 Don&apos;t have an account? Sign Up
               </Typography>

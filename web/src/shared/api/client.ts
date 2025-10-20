@@ -8,15 +8,6 @@ export const apiClient = axios.create({
   },
 })
 
-// Add token to requests
-apiClient.interceptors.request.use(config => {
-  const token = localStorage.getItem('token')
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-  return config
-})
-
 // Handle auth errors
 apiClient.interceptors.response.use(
   response => response,

@@ -1,9 +1,10 @@
 'use client'
 
-import { Box, Container, Paper,Typography } from '@mui/material'
+import { Box, Container, Paper, Typography } from '@mui/material'
 import Link from 'next/link'
 
 import { RegisterForm } from '@/features/auth/'
+import { PATHS } from '@/shared/config/paths'
 
 export function RegisterPage() {
   return (
@@ -24,7 +25,7 @@ export function RegisterPage() {
           <RegisterForm />
 
           <Box sx={{ mt: 2, textAlign: 'center' }}>
-            <Link href="/login" style={{ textDecoration: 'none' }}>
+            <Link href={PATHS.LOGIN} style={{ textDecoration: 'none' }}>
               <Typography variant="body2" color="primary">
                 Already have an account? Sign In
               </Typography>

@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 import { createPost, POSTS_BY_USER_QUERY_KEY } from '@/entities/post/'
 
-export function PostCreateForm({ username }: { username: string }) {
+export const PostCreateForm = ({ username }: { username: string }) => {
   const [content, setContent] = useState('')
   const queryClient = useQueryClient()
   const { mutate, isPending } = useMutation({

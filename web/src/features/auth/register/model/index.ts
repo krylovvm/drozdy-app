@@ -3,17 +3,17 @@ import { useRouter } from 'next/navigation'
 
 import { USER_QUERY_KEY, userApi } from '@/entities/user/'
 import { RegisterRequest } from '@/entities/user/model/types'
+import { PATHS } from '@/shared/config/paths'
 
 export const useRegister = () => {
-  const router = useRouter()
+  const { push } = useRouter()
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: (data: RegisterRequest) => userApi.register(data),
     onSuccess: data => {
-      localStorage.setItem('token', data.token)
       queryClient.setQueryData([USER_QUERY_KEY], { user: data.user })
-      router.push('/')
+      push(PATHS.PROFILE)
     },
   })
 }
