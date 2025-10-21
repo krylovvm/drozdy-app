@@ -1,10 +1,9 @@
 'use client'
 
-import { Box, Button, Card, CardContent, CircularProgress, Stack, Typography } from '@mui/material'
+import { Box, Button, CircularProgress, Stack } from '@mui/material'
+import { useUserPosts, PostCard } from '@/entities/post/'
 
-import { useUserPosts } from '@/entities/post/'
-
-export const ProfileFeed = ({ username }: { username: string }) => {
+export const Feed = ({ username }: { username: string }) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useUserPosts(username)
 
   if (isLoading) {
@@ -22,16 +21,7 @@ export const ProfileFeed = ({ username }: { username: string }) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .flatMap(page => (page as any).items)
         .map(post => (
-          <Card key={post.id} variant="outlined">
-            <CardContent>
-              <Typography variant="body1" sx={{ mb: 1 }}>
-                {post.content}
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                {new Date(post.createdAt).toLocaleString()}
-              </Typography>
-            </CardContent>
-          </Card>
+          <PostCard key={post.id} id={post.id} content={post.content} createdAt={post.createdAt} />
         ))}
       {hasNextPage && (
         <Button
@@ -40,7 +30,7 @@ export const ProfileFeed = ({ username }: { username: string }) => {
           variant="contained"
           sx={{ alignSelf: 'center', mt: 2 }}
         >
-          {isFetchingNextPage ? <CircularProgress size={20} /> : 'Load more'}
+          {isFetchingNextPage ? 'Loading...' : 'Load more'}
         </Button>
       )}
     </Stack>

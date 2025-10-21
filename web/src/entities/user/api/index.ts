@@ -1,24 +1,24 @@
 import { apiClient } from '@/shared/api/client'
+import type { LoginRequest, RegisterRequest, AuthResponse, User } from '../model/types'
 
-import { AuthResponse, LoginRequest, RegisterRequest, User } from '../model/types'
+export async function registerUser(data: RegisterRequest): Promise<AuthResponse> {
+  const res = await apiClient.post<AuthResponse>('/api/auth/register', data)
 
-export const userApi = {
-  register: async (data: RegisterRequest): Promise<AuthResponse> => {
-    const response = await apiClient.post<AuthResponse>('/api/auth/register', data)
-    return response.data
-  },
+  return res.data
+}
 
-  login: async (data: LoginRequest): Promise<AuthResponse> => {
-    const response = await apiClient.post<AuthResponse>('/api/auth/login', data)
-    return response.data
-  },
+export async function loginUser(data: LoginRequest): Promise<AuthResponse> {
+  const res = await apiClient.post<AuthResponse>('/api/auth/login', data)
 
-  getMe: async (): Promise<{ user: User }> => {
-    const response = await apiClient.get<{ user: User }>('/api/auth/me')
-    return response.data
-  },
+  return res.data
+}
 
-  logout: async (): Promise<void> => {
-    await apiClient.post('/api/auth/logout')
-  },
+export async function getCurrentUser(): Promise<{ user: User }> {
+  const res = await apiClient.get<{ user: User }>('/api/auth/me')
+
+  return res.data
+}
+
+export async function logoutUser(): Promise<void> {
+  await apiClient.post('/api/auth/logout')
 }

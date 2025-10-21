@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
-import { LoginRequest, USER_QUERY_KEY, userApi } from '@/entities/user/'
+import { LoginRequest, USER_QUERY_KEY, loginUser } from '@/entities/user/'
 import { PATHS } from '@/shared/config/paths'
 
 export const useLogin = () => {
@@ -9,7 +9,7 @@ export const useLogin = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data: LoginRequest) => userApi.login(data),
+    mutationFn: (data: LoginRequest) => loginUser(data),
     onSuccess: data => {
       queryClient.setQueryData([USER_QUERY_KEY], { user: data.user })
       push(PATHS.PROFILE)

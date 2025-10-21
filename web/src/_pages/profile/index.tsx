@@ -1,15 +1,14 @@
 'use client'
 
-import { Container, Typography } from '@mui/material'
-import { Box, CircularProgress } from '@mui/material'
+import { Container, Box, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 import { useAuth } from '@/entities/user/'
-import { LogoutButton } from '@/features/auth/'
 import { PostCreateForm } from '@/features/post/'
 import { PATHS } from '@/shared/config/paths'
-import { ProfileFeed } from '@/widgets/profile-feed/'
+import { Feed } from '@/widgets/feed'
+import { ProfileHeader } from '@/widgets/profile-header'
 
 export function ProfilePage() {
   const { user, isLoading, isAuthenticated } = useAuth()
@@ -30,12 +29,13 @@ export function ProfilePage() {
     )
   }
 
+  const username = user?.username || ''
+
   return (
-    <Container>
-      <LogoutButton />
-      <Typography variant="h2">{user?.username}</Typography>
-      <PostCreateForm username={user?.username || ''} />
-      <ProfileFeed username={user?.username || ''} />
+    <Container sx={{ pb: 4 }}>
+      <ProfileHeader username={username} />
+      <PostCreateForm username={username} />
+      <Feed username={username} />
     </Container>
   )
 }

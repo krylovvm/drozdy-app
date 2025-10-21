@@ -8,7 +8,7 @@ export const LogoutButton = () => {
   const { mutate: logout, isPending } = useLogout()
 
   return (
-    <Button onClick={() => logout()} disabled={isPending}>
+    <Button variant="outlined" onClick={() => logout()} disabled={isPending}>
       Logout
     </Button>
   )
