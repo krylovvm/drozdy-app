@@ -16,8 +16,5 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
-  },
-  "dependencies": {
-    "body-parser": "^2.2.0"
   }
 }
