@@ -11,7 +11,8 @@
     "dev:server": "npm run dev --workspace=server",
     "dev:web": "npm run dev --workspace=web",
     "build": "npm run build --workspaces",
-    "lint": "npm run lint --workspaces"
+    "lint": "npm run lint --workspaces",
+    "prod": "npm run build && concurrently \"npm run start --workspace=server\" \"npm run start --workspace=web\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

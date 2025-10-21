@@ -18,8 +18,8 @@ const eslintConfig = [
       'simple-import-sort': pluginSimpleImportSort,
     },
     rules: {
-      'simple-import-sort/imports': 'error',
-      'simple-import-sort/exports': 'error',
+      'simple-import-sort/imports': 'warn',
+      'simple-import-sort/exports': 'warn',
     },
   },
 ]

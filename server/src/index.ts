@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
@@ -24,10 +24,13 @@ app.use(cookieParser())
 app.use('/api/auth', authRoutes)
 app.use('/api', postsRoutes)
 
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
   res.json({ message: 'Drozdy API' })
 })
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
+export { app }
+export default app
