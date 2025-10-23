@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { createPost, getPostsByUser } from '../api/'
+import { createPost, deletePost, getPostsByUser } from '../api/'
 
 export interface Post {
   id: string
@@ -30,6 +30,17 @@ export const useCreatePost = (username: string) => {
 
   return useMutation({
     mutationFn: (content: string) => createPost(username, content),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [POSTS_BY_USER_QUERY_KEY, username] })
+    },
+  })
+}
+
+export const useDeletePost = (username: string) => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (postId: string) => deletePost(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [POSTS_BY_USER_QUERY_KEY, username] })
     },
