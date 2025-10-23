@@ -1,9 +1,11 @@
 import { apiClient } from '@/shared/api/client'
 
+import type { PostsPage } from '../model/'
+
 export const getPostsByUser = async (
   username: string,
   params: { limit?: number; cursor?: string }
-) => {
+): Promise<PostsPage> => {
   const res = await apiClient.get(`/api/users/${username}/posts`, { params })
 
   return res.data

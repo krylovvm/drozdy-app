@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express'
-import { requireAuth } from '../middleware/auth.middleware'
+import { requireAuth, AuthenticatedRequest } from '../middleware/auth.middleware'
 import { prisma } from '../prisma'
+import { PostDTO } from '../models/post.model'
 
 const router = Router()
 
@@ -22,7 +23,7 @@ router.get('/users/:username/posts', async (req: Request, res: Response) => {
   const orderBy = { createdAt: 'desc' as const }
   const cursorObj = cursor ? { id: String(cursor) } : undefined
 
-  const posts = await prisma.post.findMany({
+  const posts: PostDTO[] = await prisma.post.findMany({
     where,
     orderBy,
     take,
@@ -36,10 +37,10 @@ router.get('/users/:username/posts', async (req: Request, res: Response) => {
 
 // Create post (auth required)
 router.post('/users/:username/posts', requireAuth, async (req: Request, res: Response) => {
-  const { username } = req.params
-  const { content } = req.body
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const userId = (req as any).userId
+  const authReq = req as AuthenticatedRequest
+  const { username } = authReq.params
+  const { content } = authReq.body
+  const userId = authReq.userId
 
   if (!content || typeof content !== 'string' || content.length < 1 || content.length > 280) {
     return res.status(400).json({ message: 'Content must be 1-280 characters' })
@@ -64,7 +65,7 @@ router.post('/users/:username/posts', requireAuth, async (req: Request, res: Res
     return res.status(429).json({ message: 'Wait 3 seconds between posts' })
   }
 
-  const post = await prisma.post.create({
+  const post: PostDTO = await prisma.post.create({
     data: {
       userId,
       content,
@@ -76,9 +77,9 @@ router.post('/users/:username/posts', requireAuth, async (req: Request, res: Res
 
 // Delete post (auth required)
 router.delete('/posts/:id', requireAuth, async (req: Request, res: Response) => {
-  const { id } = req.params
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const userId = (req as any).userId
+  const authReq = req as AuthenticatedRequest
+  const { id } = authReq.params
+  const userId = authReq.userId
 
   const post = await prisma.post.findUnique({ where: { id } })
   if (!post || post.userId !== userId) {

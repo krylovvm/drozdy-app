@@ -1,5 +1,6 @@
 import { apiClient } from '@/shared/api/client'
-import type { LoginRequest, RegisterRequest, AuthResponse, User } from '../model/types'
+
+import type { AuthResponse, LoginRequest, RegisterRequest, User } from '../model/types'
 
 export async function registerUser(data: RegisterRequest): Promise<AuthResponse> {
   const res = await apiClient.post<AuthResponse>('/api/auth/register', data)

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
-import { USER_QUERY_KEY, registerUser } from '@/entities/user/'
+import { registerUser, USER_QUERY_KEY } from '@/entities/user/'
 import { RegisterRequest } from '@/entities/user/model/types'
 import { PATHS } from '@/shared/config/paths'
 

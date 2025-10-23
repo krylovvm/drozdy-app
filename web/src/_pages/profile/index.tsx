@@ -1,6 +1,6 @@
 'use client'
 
-import { Container, Box, CircularProgress } from '@mui/material'
+import { Box, CircularProgress, Container } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
@@ -32,10 +32,12 @@ export function ProfilePage() {
   const username = user?.username || ''
 
   return (
-    <Container sx={{ pb: 4 }}>
+    <>
       <ProfileHeader username={username} />
-      <PostCreateForm username={username} />
-      <Feed username={username} />
-    </Container>
+      <Container component="main" sx={{ pb: 4 }}>
+        <PostCreateForm username={username} />
+        <Feed username={username} />
+      </Container>
+    </>
   )
 }

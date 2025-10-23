@@ -1,7 +1,8 @@
 'use client'
 
 import { Box, Button, CircularProgress, Stack } from '@mui/material'
-import { useUserPosts, PostCard } from '@/entities/post/'
+
+import { PostCard, useUserPosts } from '@/entities/post/'
 
 export const Feed = ({ username }: { username: string }) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useUserPosts(username)
@@ -17,11 +18,9 @@ export const Feed = ({ username }: { username: string }) => {
   return (
     <Stack spacing={2}>
       {data?.pages
-        // TODO: fix any
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .flatMap(page => (page as any).items)
+        .flatMap(page => page.items)
         .map(post => (
-          <PostCard key={post.id} id={post.id} content={post.content} createdAt={post.createdAt} />
+          <PostCard key={post.id} content={post.content} createdAt={post.createdAt} />
         ))}
       {hasNextPage && (
         <Button

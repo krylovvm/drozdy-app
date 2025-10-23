@@ -1,6 +1,18 @@
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { getPostsByUser, createPost } from '../api/'
+import { createPost, getPostsByUser } from '../api/'
+
+export interface Post {
+  id: string
+  content: string
+  createdAt: string
+  userId: string
+}
+
+export interface PostsPage {
+  items: Post[]
+  nextCursor: string | null
+}
 
 export const POSTS_BY_USER_QUERY_KEY = 'user-posts'
 
@@ -9,7 +21,7 @@ export const useUserPosts = (username: string) =>
     queryKey: [POSTS_BY_USER_QUERY_KEY, username],
     queryFn: ({ pageParam }) =>
       getPostsByUser(username, { cursor: pageParam as string | undefined, limit: 10 }),
-    getNextPageParam: (lastPage: { nextCursor?: string }) => lastPage.nextCursor,
+    getNextPageParam: (lastPage: PostsPage) => lastPage.nextCursor,
     initialPageParam: undefined,
   })
 
